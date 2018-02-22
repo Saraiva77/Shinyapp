@@ -1,0 +1,35 @@
+library(shiny)
+library(ggplot2)
+
+#setwd para colocar o diretorio com o arquivo
+#desenvolvendo metodo para ser automatico
+#de inicio usar read.table() com dado historico para teste
+
+ui <- pageWithSidebar(
+
+  headerPanel("Serie Histórica MDU"),
+
+ sidebarPanel(
+    radioButtons("variable", "Tipo que deseja olhar:",
+                c("Linha 1" = "Linha_1", 
+                     "Linha 2" = "Linha_2",
+                     "Linha 4" = "Linha_4", 
+                     "Sistema" = "Sistema"))
+  ),
+
+    mainPanel(
+plotOutput("variable")
+))
+
+server <- function(input, output) { 
+
+output$variable <- renderPlot({
+
+ggplot(dados, aes_string(x=dados[,1], y=input$variable))+
+geom_col()
+
+  })
+
+}
+
+shinyApp(ui = ui, server = server)
