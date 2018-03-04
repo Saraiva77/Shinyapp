@@ -1,0 +1,6 @@
+library(rvest)
+url <- read_html("http://globoesporte.globo.com/rj/futebol/campeonato-carioca/")
+id_tab <- url %>% html_nodes(xpath = '//*[@id="container-para-tabela-simulador-ou-navegacao-js"]/article/section[1]/div/div[1]/table')
+tabela <- id_tab %>% html_table() %>% data.frame()
+tabela <- tabela[,-1] 
+
